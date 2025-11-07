@@ -1,40 +1,56 @@
 fn main() {
-    let a: [i32; 2] = [148, 53];
-    let r: [i32; 2] = [0, 0];
-    let cycles: i32 = 3;
+    let p: [i64; 2] = [-79745, 15616];
+    let r: [i64; 2] = [0, 0];
+    let grid_aperture: i64 = 10;
+    let cycles: i64 = 100;
 
-    let result: [i32; 2] = cycle(r, a, cycles);
+    let mut counter = 0;
 
-    println!("Result is {:?}", result);
+    for x in 0..101 {
+        for y in 0..101 {
+            if cycle_check(
+                r,
+                [p[0] + (grid_aperture * x), p[1] + (grid_aperture * y)],
+                cycles,
+            ) {
+                counter += 1;
+            }
+        }
+    }
+
+    println!("Result is {:?}", counter);
 }
 
-fn add(lhs: [i32; 2], rhs: [i32; 2]) -> [i32; 2] {
+fn add(lhs: [i64; 2], rhs: [i64; 2]) -> [i64; 2] {
     [lhs[0] + rhs[0], lhs[1] + rhs[1]]
 }
 
-fn multiply(lhs: [i32; 2], rhs: [i32; 2]) -> [i32; 2] {
+fn multiply(lhs: [i64; 2], rhs: [i64; 2]) -> [i64; 2] {
     [
         (lhs[0] * rhs[0]) - (lhs[1] * rhs[1]),
         (lhs[0] * rhs[1]) + (lhs[1] * rhs[0]),
     ]
 }
 
-fn divide(lhs: [i32; 2], rhs: [i32; 2]) -> [i32; 2] {
+fn divide(lhs: [i64; 2], rhs: [i64; 2]) -> [i64; 2] {
     [lhs[0] / rhs[0], lhs[1] / rhs[1]]
 }
 
-fn cycle(lhs: [i32; 2], rhs: [i32; 2], cycles: i32) -> [i32; 2] {
-    let mut r: [i32; 2] = lhs;
-    let mut counter: i32 = cycles;
-
+fn cycle_check(mut r: [i64; 2], p: [i64; 2], mut cycles: i64) -> bool {
     loop {
-        if counter < 1 {
-            return r;
+        if cycles < 1 {
+            return true;
         }
-        counter -= 1;
-        print!("Current Value {:?}", r);
+        cycles -= 1;
         r = multiply(r, r);
-        r = divide(r, [10, 10]);
-        r = add(r, rhs);
+        r = divide(r, [100000, 100000]);
+        r = add(r, p);
+
+        if r[0] > 1000000 || r[1] > 1000000 {
+            return false;
+        }
+        if r[0] < -1000000 || r[1] < -1000000 {
+            return false;
+        }
     }
 }
