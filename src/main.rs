@@ -1,13 +1,13 @@
 fn main() {
     let p: [i64; 2] = [-79745, 15616];
     let r: [i64; 2] = [0, 0];
-    let grid_aperture: i64 = 10;
+    let grid_aperture: i64 = 1;
     let cycles: i64 = 100;
 
     let mut counter = 0;
 
-    for x in 0..101 {
-        for y in 0..101 {
+    for x in 0..1001 {
+        for y in 0..1001 {
             if cycle_check(
                 r,
                 [p[0] + (grid_aperture * x), p[1] + (grid_aperture * y)],
