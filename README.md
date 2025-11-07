@@ -1,1 +1,1 @@
-part 1 of https://everybody.codes/event/2025/quests/2
+part 3 of https://everybody.codes/event/2025/quests/2
