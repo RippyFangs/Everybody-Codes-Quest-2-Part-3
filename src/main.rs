@@ -9,34 +9,32 @@ fn main() {
 }
 
 fn add(lhs: [i32; 2], rhs: [i32; 2]) -> [i32; 2] {
-    let result: [i32; 2] = [lhs[0] + rhs[0], lhs[1] + rhs[1]];
-    result
+    [lhs[0] + rhs[0], lhs[1] + rhs[1]]
 }
 
 fn multiply(lhs: [i32; 2], rhs: [i32; 2]) -> [i32; 2] {
-    let result: [i32; 2] = [
+    [
         (lhs[0] * rhs[0]) - (lhs[1] * rhs[1]),
         (lhs[0] * rhs[1]) + (lhs[1] * rhs[0]),
-    ];
-    result
+    ]
 }
 
 fn divide(lhs: [i32; 2], rhs: [i32; 2]) -> [i32; 2] {
-    let result: [i32; 2] = [lhs[0] / rhs[0], lhs[1] / rhs[1]];
-    result
+    [lhs[0] / rhs[0], lhs[1] / rhs[1]]
 }
 
 fn cycle(lhs: [i32; 2], rhs: [i32; 2], cycles: i32) -> [i32; 2] {
     let mut r: [i32; 2] = lhs;
     let mut counter: i32 = cycles;
 
-    while counter >= 1 {
+    loop {
+        if counter < 1 {
+            return r;
+        }
         counter -= 1;
         print!("Current Value {:?}", r);
         r = multiply(r, r);
         r = divide(r, [10, 10]);
         r = add(r, rhs);
     }
-
-    r
 }
